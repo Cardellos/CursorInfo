@@ -1,7 +1,7 @@
 CursorInfo
 ==========
 
-software not fully ready but fully usable
+software not fully ready, but fully usable
 
 Features:
 
