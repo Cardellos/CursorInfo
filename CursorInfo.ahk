@@ -1,3 +1,48 @@
+/*
+======[ Settings GUI ]======
+	Positions
+	default text
+	default button
+	color
+	CPU
+	└ Cores to show
+	└ Show BG
+	Ram
+	└
+/	Disk
+	└
+	Network
+	└
+	Volume
+	└ Full Time/On Key Press/Off
+	└ Number(%)/image
+	Brightness
+	└
+	Date / calendar
+	└
+/	Mail
+	└
+	Weather
+	└
+/	BlueTooth
+	└
+	Change Tray Icon 
+	└
+	2/3 of screen
+	└
+	Battery
+	└
+	Clock
+	└
+	Hotkeys
+	└
+	NowPlayng
+	└
+	Wifi
+	└
+*/
+
+
 #NoEnv
 SendMode Input
 CoordMode, mouse, Screen
@@ -6,29 +51,29 @@ CoordMode, mouse, Screen
 #Include Res\Cardellos
 Menu, Tray, NoStandard
 ;Menu, Tray, Add,Test
-Menu, Tray, Add,Reload
-Menu, Battery, Add, Battery Toggle,BattTogg
-Menu, Battery, Add, Battery Transparency (WIP),BattTrans
-Menu, Battery, Add, Background Toggle,BattBgTogg
-Menu, Tray, Add, Battery, :Battery
-Menu, Wifi, Add, WiFi Toggle,WifiTogg
-Menu, Tray, Add, Wifi, :WiFi
-Menu, Clock, Add, Clock Toggle,ClockTogg
-Menu, Clock, Add, Background Toggle (WIP),Clockbg
-Menu, Tray, Add, Clock, :Clock
-Menu, Hotkeys, Add, Hotkeys Toggle,HotTogg
-Menu, Hotkeys, Add, NowPlaying Toggle,NPTogg
-Menu, Tray, Add, Hotkeys, :Hotkeys
+Menu, Tray, Add, Reload
+Menu, Tray, Add, Settings, Set
+;Menu, Battery, Add, Battery Toggle,BattTogg
+;Menu, Battery, Add, Battery Transparency (WIP),BattTrans
+;Menu, Battery, Add, Background Toggle,BattBgTogg
+;Menu, Tray, Add, Battery, :Battery
+;Menu, Wifi, Add, WiFi Toggle,WifiTogg
+;Menu, Tray, Add, Wifi, :WiFi
+;Menu, Clock, Add, Clock Toggle,ClockTogg
+;Menu, Clock, Add, Background Toggle (WIP),Clockbg
+;Menu, Tray, Add, Clock, :Clock
+;Menu, Hotkeys, Add, Hotkeys Toggle,HotTogg
+;Menu, Hotkeys, Add, NowPlaying Toggle,NPTogg
+;Menu, Tray, Add, Hotkeys, :Hotkeys
 Menu, Tray, Add, 
 Menu, Tray, Add, 
-Menu, Tray, Add,About
-Menu, Tray, Add,Exit,GuiClose
-Menu, Tray, Default,Reload
+;Menu, Tray, Add, About
+Menu, Tray, Add, Exit,GuiClose
+Menu, Tray, Default, Reload
 WinGet, XWin, ID, A 
 DetectHiddenWindows, on
 GUI +HwndCursorInfo +E0x80000 +E0x20 +toolwindow -caption -border -Resize +LastFound +AlwaysOnTop +Disabled
 Gui,Color, 111112
-WinSet, Transparent, %Trans%, CursorInfo
 SetTimer, CheckFor, 1000
 Gosub, CheckFor
 SetTimer, FollowMouse, 10
@@ -42,16 +87,68 @@ Gui,Font, s12 cFFFFFF
 {
 	Gui, Add, Text, vSee BackgroundTrans, % "MX=" MX "`nMY=" MY "`nVW=" VW "`nVH=" VH "`n" A_Hour ":" A_Min "`n" AC ":" BP
 }
+;#If WhyFiTogg
+;{
+;	Gui, Add, Text, vYfi BackgroundTrans, "1"
+;}
 Gui,show, x%mX% y%mY% w42 h18, CursorInfo
 WinActivate, ahk_id %XWin%
 ;ListVars
-;#if A_TimeIdlePhysical = 144000000
-;{
-;	SendMessage,0x112,0xF170,2,,Program Manager
-;}
+;Gosub,set
 return
 
-Test:
+
+Set:
+	Gui,Set:New,, Settings
+	Gui,Set: Add, Button, x490 y445 w100 h30 gGuiSetClose, Close
+	Gui,Set: Add, TreeView, x10 y10 h460 w130  AltSubmit gClick
+		P01:=TV_Add("Battery")
+		P02:=TV_Add("Clock")
+		P03:=TV_Add("Hotkeys")
+		P04:=TV_Add("NowPlaying")
+		P05:=TV_Add("Wifi")
+		P06:=TV_Add("CPU (WIP)")
+		P07:=TV_Add("Ram (WIP)")
+		P08:=TV_Add("Disk (WIP)")
+		P09:=TV_Add("NetWork (WIP)")
+		P10:=TV_Add("Volume (WIP)")
+		P11:=TV_Add("Brightness (WIP)")
+		P12:=TV_Add("Date (WIP)")
+	Gui,Set: Add, GroupBox, x150 ym w440 h430 section vOptionTitle
+	Gui,Set: Add, Tab2, x150 y30 w0 h0 -Wrap vMyTab, Zero|One|Two|Three|Four|Five|Six|Seven|Eight|Nine|Ten|Eleven|Twelve
+	Gui,Set: Tab, Zero
+		Gui,Set: Add, Text,, This is the CursorInfo's Settings GUI `n Created by Cardellos
+;		Gui,Set: Add, Button, gButtonsLabel, Button 1
+;		Gui,Set: Add, Edit, gEditsLabel, Edit box 2
+;		Gui,Set: Add, ListBox, gLBLabel, Item1|Item2|Item3
+	Gui,Set: Tab, One
+		Gui,Set: Add, Checkbox, Checked%BattTogg%  gBattTogg, Show Battery
+		Gui,Set: Add, GroupBox, w420 h300 section, Battery Options
+		Gui,Set: Add, Checkbox, xs+10 ys+15 Checked%BattBgTogg% gBattBgTogg, Show Battery Background
+		Gui,Set: Add, Checkbox, xs+10 ys+30 Checked%BattTrans% gBattTrans, Battery Transparency
+		Gui,Set: Add, Edit, xs+10 ys+45 gTrans, %Trans%
+		Gui,Set: Add, Text, xs+40 ys+50 , Battery Transparency
+;		Gui,Set: Add, Edit, xs+10 ys+60 gTrans, %BG%
+;		Gui,Set: Add, Text, xs+90 ys+65 , Battery Transparency Color
+	Gui,Set: Tab, Two                  
+		Gui,Set: Add, Checkbox, Checked%ClockTogg% gClockTogg, Show Clock
+		Gui,Set: Add, Checkbox, Checked%ClockBg% gClockBg, Show Clock Background (Only works if battery is disabled)
+	Gui,Set: Tab, Three                
+		Gui,Set: Add, Checkbox, Checked%HotTogg% gHotTogg, Enable Hotkeys
+	Gui,Set: Tab, Four                 
+		Gui,Set: Add, Checkbox, Checked%NPTogg% gNPTogg, Enable NowPlaying
+	Gui,Set: Tab, Five                 
+		Gui,Set: Add, Checkbox, Checked%WifiTogg% gWifiTogg, Enable Wifi
+		Gui,Set: Add, Checkbox, Checked%WhyfiTogg% gWhyfiTogg, Enable Whyfi
+	Gui,Set: Tab, Six
+	Gui,Set: Tab, Seven
+	Gui,Set: Tab, Eight
+	Gui,Set: Tab, Nine
+	Gui,Set: Tab, Ten
+	Gui,Set: Tab, Eleven
+	Gui,Set: Tab, Twelve
+	GUI,Set: +HwndSet -Resize -Disabled -MinimizeBox -MaximizeBox
+	Gui,Set: Show, W600 H480, CursorInfo Settings ; x30 y-720
 return
 
 BattTogg:
@@ -62,6 +159,9 @@ BattTrans:
 	Toggle(BattTrans)
 	VarFile("res\Cardellos","BattTrans",BattTrans)
 return
+Trans:
+	VarFile("res\Cardellos","Trans",Trans)
+return
 BattBgTogg:
 	Toggle(BattBgTogg)
 	VarFile("res\Cardellos","BattBgTogg",BattBgTogg)
@@ -69,6 +169,10 @@ return
 WifiTogg:
 	Toggle(WifiTogg)
 	VarFile("res\Cardellos","WifiTogg",WifiTogg)
+return
+WhyfiTogg:
+	Toggle(WhyfiTogg)
+	VarFile("res\Cardellos","WhyfiTogg",WhyfiTogg)
 return
 ClockTogg:
 	Toggle(ClockTogg)
@@ -87,8 +191,16 @@ NPTogg:
 	VarFile("res\Cardellos","NPTogg",NPTogg)
 return
 
+Test:
+return
 
 CheckFor:
+	If BattTrans
+	{
+		WinSet, Transparent, %Trans%, CursorInfo
+	} Else {
+		WinSet, Transparent, 255, CursorInfo
+	}
 	SysGet, MN, MonitorCount
 	If (MN = OMN)	{
 		OMN:=MN
@@ -111,23 +223,25 @@ CheckFor:
 	If (AC == 0)	{
 		Colore:=rgb2hex(-0R,0G,0)
 		BG=000000
-		Menu, Tray, Icon,res\%BP%.ico
+		Menu, Tray, Icon,res\Battery.icl,%BP%
 		Menu, Tray, Tip,Cursor Info`nBattery at %BP%`% 
 	}	Else if (Ac == 1)	{
 			If (BP == 100)		{
 				Colore:=000000
 				BG:=FFFFFF
 				Menu, Tray, Tip,Cursor Info`nBattery is fully charged
+				Menu, Tray, Icon,res\Charging.icl,%BP%
 			} Else If (BP == 255){
 				Colore:=FF0000
 				BG:=FF0000
 				Menu, Tray, Tip,Cursor Info`nBattery error
+				Menu, Tray, Icon,res\Icon.icl,4
 			} Else {
 				Colore:=000088
 				BG:=rgb2hex(-0R,0G,0)
 				Menu, Tray, Tip,Cursor Info`nBattery charging at %BP%`% 
+				Menu, Tray, Icon,res\Charging.icl,%BP%
 			}
-		Menu, Tray, Icon,res\C%BP%.ico
 	}
 return
 
@@ -159,11 +273,85 @@ FollowMouse:
 	} Else {
 		GuiControl, Hide, See
 	}
+;	If WhyFiTogg {
+;		GuiControl, Show, Yfi
+;		GuiControl,, Yfi,
+;		GuiControl, Move, Yfi, x0 y10
+;	} Else {
+;		GuiControl, Hide, Yfi
+;	}
 	GuiControl,Move, PP , x0 y%Ms% W2000
 	winset,alwaysontop,on, CursorInfo
 	WinSet, TransColor, %BG% 150, BattProg
 	MouseGetPos,mx,my
+		
 return
+
+Click:
+	If (A_GuiEvent == "Normal")
+	{
+		If (A_EventInfo == P01)
+		{
+			GuiControl,, OptionTitle, Battery
+			GuiControl, Choose, MyTab, One
+		}
+		Else If (A_EventInfo == P02)
+		{
+			GuiControl,, OptionTitle, Clock
+			GuiControl, Choose, MyTab, Two
+		}
+		Else If (A_EventInfo == P03)
+		{
+			GuiControl,, OptionTitle, Hotkeys
+			GuiControl, Choose, MyTab, Three
+		}
+		Else If (A_EventInfo == P04)
+		{
+			GuiControl,, OptionTitle, NowPlaying
+			GuiControl, Choose, MyTab, Four
+		}
+		Else If (A_EventInfo == P05)
+		{
+			GuiControl,, OptionTitle, Wifi
+			GuiControl, Choose, MyTab, Five
+		}
+		Else If (A_EventInfo == P06)
+		{
+;			GuiControl,, OptionTitle, CPU 
+;			GuiControl, Choose, MyTab, Six
+		}
+		Else If (A_EventInfo == P07)
+		{
+;			GuiControl,, OptionTitle, Ram
+;			GuiControl, Choose, MyTab, Seven
+		}
+		Else If (A_EventInfo == P08)
+		{
+;			GuiControl,, OptionTitle, Disk
+;			GuiControl, Choose, MyTab, Eight
+		}
+		Else If (A_EventInfo == P09)
+		{
+;			GuiControl,, OptionTitle, NetWork
+;			GuiControl, Choose, MyTab, Nine
+		}
+		Else If (A_EventInfo == P10)
+		{
+;			GuiControl,, OptionTitle, Volume
+;			GuiControl, Choose, MyTab, Ten
+		}
+		Else If (A_EventInfo == P11)
+		{
+;			GuiControl,, OptionTitle, Brightness
+;			GuiControl, Choose, MyTab, Eleven
+		}
+		Else If (A_EventInfo == P12)
+		{
+;			GuiControl,, OptionTitle, Date
+;			GuiControl, Choose, MyTab, Twelve
+		}
+	}
+Return
 
 getWiFiSignalStrength(SSID, tmpFileName) ;by jbscout
 {
@@ -349,57 +537,68 @@ MonFromWin(windowHandle){ ; by shinywong
 #If HotTogg = 1
 {	
 	!F1::
-	WinGet, cT, Transparent, A
-	if (cT = 150)	{
-		WinSet, Transparent, OFF, A
-	}	else	{
-		WinSet, Transparent, 150, A
-	}
+		WinGet, cT, Transparent, A
+		if (cT = 150)	{
+			WinSet, Transparent, OFF, A
+		}	else	{
+			WinSet, Transparent, 150, A
+		}
 	return
 	!F2::
-	WinMinimize, A
+		WinMinimize, A
 	return
 	!F3::
-	WinGet,WMinMax, MinMax, A
-	If (WMinMax != 0)
-	{
-		WinRestore, A
-	} Else {
-		WinMaximize, A
-	}
+		WinGet,WMinMax, MinMax, A
+		If (WMinMax != 0)
+		{
+			WinRestore, A
+		} Else {
+			WinMaximize, A
+		}
 	return
 	!F5::
-	WinSet, AlwaysOnTop, Toggle
+		WinSet, AlwaysOnTop, Toggle
 	return
 	F8::
-	Run "A:\!ns\Aud\Winamp\winamp.exe"
+		Run "A:\!ns\Aud\Winamp\winamp.exe"
 	return
 	!F8::
-	SendInput {F8}
+		SendInput {F8}
 	return
 	F9::
-	SendInput {Media_Play_Pause}
+		SendInput {Media_Play_Pause}
+		SimpleNP:=1
+		Gosub, GetPlaying
+		SimpleNP:=0
 	return
 	!F9::
-	SendInput {F9}
+		SendInput {F9}
 	return
 	F10::
-	SendInput {Media_Stop}
+		SendInput {Media_Stop}
 	return
 	!F10::
-	SendInput {F10}
+		SendInput {F10}
 	return
 	F11::
-	SendInput {Media_Prev}
+		SendInput {Media_Prev}
+		SimpleNP:=1
+		Sleep, 300
+		Gosub, GetPlaying
+		SimpleNP:=0
 	return
 	!F11::
-	SendInput {F11}
+		SendInput {F11}
 	return
 	F12::
-	SendInput {Media_Next}
+		SendInput {Media_Next}
+		SimpleNP:=1
+		Sleep, 300
+		Gosub, GetPlaying
+		SimpleNP:=0
 	return
 	!F12::
-	SendInput {F12}
+		SendInput {F12}
 	return
 	#Up::
 		GetWinPos()
@@ -441,73 +640,125 @@ MonFromWin(windowHandle){ ; by shinywong
 		WinRestore, A
 		WinMove, A,, MAX, MAY, MAX, MAY
 	return
+;	XButton1::
+;		if WinActive("VLC media player") WinActive("Winamp") {
+;			Send {Media_Prev}
+;		}
+;	XButton2::
+;		if WinActive("VLC media player") WinActive("Winamp") {
+;			Send {Media_Next}
+;		}
+	MButton::
+		if WinActive("ahk_class WorkerW") {
+			SendMessage, 0x112, 0xF170, 2,, Program Manager
+		} Else If WinActive("VLC media player","ahk_class QWidget") WinActive("Winamp","ahk_class BaseWindow_RootWnd") {
+			Send {Media_Play_Pause}
+		} Else {
+			Send {MButton}
+		}
+	return
 }
 
 #If NPTogg = 1
 {
 	PrintScreen::
-		#EscapeChar \ ;============[ Based on Purkki's "NowPlaying" ]
-		SetTitleMatchMode 2
-		DetectHiddenWindows On
-		IfWinExist, VLC media player
-		{
-			WinGetTitle, vlcTitle
-			NPSong:=VLC()
-		} Else IfWinExist, - Winamp	
-		{
-			WinGetTitle, winampTitle
-			song := RegExReplace(winampTitle, "^[0-9]*\. (.*) - Winamp$", "$1")
-			TE:=Winamp("0")
-			TT:=Winamp("1")
-			TE:=TE/1000
-			TE:=FormatSeconds(TE)
-			TT:=FormatSeconds(TT)
-			NPSong:= RegExReplace(Song, "([!\+\^#])", "{$1}")
-		}
-		Gui,2: Font, s12 cFFFFFF
-		Gui,2: Add, Text, x0 y0 vPP Hidden BackgroundTrans, % NPSong " " TE "/" TT
-		Sleep, 300
-		GUI,2: +HwndCursorInfo2 +E0x80000 +E0x20 +toolwindow -caption -border -Resize +LastFound +AlwaysOnTop +Disabled
-		Gui,2: Color, 111112
-		WinSet, Transparent, %Trans%, CursorInfo2
-		Gui,2: show, x%mX% y%mS% h18 NA, CursorInfo2
-		GuiControl, 2: Show, PP
+		SimpleNP:=0
+		Gosub, GetPlaying
 		If WifiTogg
 		{
 			Whyfi:=getConnectedSSID(1)
 			Sig:=getWiFiSignalStrength(Whyfi, 1)
-			Sleep, 1000
-			Gui,2: Destroy
-			Gui,3: Font, s12 cFFFFFF
-			Gui,3: Add, Text, x0 y0 vPP Hidden BackgroundTrans, % "Wifi=" Sig "%@" WhyFi
-			Sleep, 300
-			GUI,3: +HwndCursorInfo2 +E0x80000 +E0x20 +toolwindow -caption -border -Resize +LastFound +AlwaysOnTop +Disabled
-			Gui,3: Color, 111112
-			WinSet, Transparent, %Trans%, CursorInfo2
-			Gui,3: show, x%mX% y%mS% h18 NA, CursorInfo2
-			GuiControl, 3: Show, PP
+			ToolTip, % "Wifi=" Sig "%@" WhyFi
 			Sleep, 3000
-			Gui,3: Destroy
+			ToolTip,
+;			Sleep, 1000
+;			Gui,2: Destroy
+;			Gui,3: Font, s12 cFFFFFF
+;			Gui,3: Add, Text, x0 y0 vPP Hidden BackgroundTrans, % "Wifi=" Sig "%@" WhyFi
+;			Sleep, 300
+;			GUI,3: +HwndCursorInfo2 +E0x80000 +E0x20 +toolwindow -caption -border -Resize +LastFound +AlwaysOnTop +Disabled
+;			Gui,3: Color, 111112
+;			WinSet, Transparent, %Trans%, CursorInfo2
+;			Gui,3: show, x%mX% y%mS% h18 NA, CursorInfo2
+;			GuiControl, 3: Show, PP
+;			Sleep, 3000
+;			Gui,3: Destroy
 		} Else {
-			Sleep, 3000
-			Gui,2: Destroy
-		}
-		
+;			Sleep, 3000
+;			Gui,2: Destroy
+		}		
 	Return
 	!PrintScreen::
 	SendInput {PrintScreen}
 	Return
 }
 
-VLC(){
+GetPlaying:
+	#EscapeChar \ ;============[ Based on Purkki's "NowPlaying" ]
+	SetTitleMatchMode 2
+	DetectHiddenWindows On
+	IfWinExist, VLC media player
+	{
+		WinGetTitle, vlcTitle
+		NPSong:=VLC()
+		ToolTip, % NPSong " " TE "/" TT
+		Sleep, 3000
+		ToolTip,
+;		Gui,2: Font, s12 cFFFFFF
+;		Gui,2: Add, Text, x0 y0 vPP Hidden BackgroundTrans, % NPSong " " TE "/" TT
+;		Sleep, 300
+;		GUI,2: +HwndCursorInfo2 +E0x80000 +E0x20 +toolwindow -caption -border -Resize +LastFound +AlwaysOnTop +Disabled
+;		Gui,2: Color, 111112
+;		WinSet, Transparent, %Trans%, CursorInfo2
+;		Gui,2: show, x%mX% y%mS% h18 NA, CursorInfo2
+;		GuiControl, 2: Show, PP
+	} 
+	Else IfWinExist, - Winamp	
+	{
+		WinGetTitle, winampTitle
+		song := RegExReplace(winampTitle, "^[0-9]*\. (.*) - Winamp$", "$1")
+		TE:=Winamp("0")
+		TT:=Winamp("1")
+		TE:=TE/1000
+		TE:=FormatSeconds(TE)
+		TT:=FormatSeconds(TT)
+		NPSong:= RegExReplace(Song, "([!\+\^#])", "{$1}")
+		If SimpleNP
+		{
+			ToolTip, % NPSong
+			Sleep, 1500
+		} Else {
+			ToolTip, % NPSong " " TE "/" TT
+			Sleep, 3000
+		}
+		ToolTip,
+;		Gui,2: Font, s12 cFFFFFF
+;		Gui,2: Add, Text, x0 y0 vPP Hidden BackgroundTrans, % NPSong " " TE "/" TT
+;		Sleep, 300
+;		GUI,2: +HwndCursorInfo2 +E0x80000 +E0x20 +toolwindow -caption -border -Resize +LastFound +AlwaysOnTop +Disabled
+;		Gui,2: Color, 111112
+;		WinSet, Transparent, %Trans%, CursorInfo2
+;		Gui,2: show, x%mX% y%mS% h18 NA, CursorInfo2
+;		GuiControl, 2: Show, PP
+	}
+return
+
+VLC(){ ; by Cardellos
 	VLCURL:="http://:1@127.0.0.1:8080/requests/status.xml?%A_Hour%%A_Min%%A_Sec%"
 	UrlDownloadToFile, VLCURL ,Vlcstatus
 	FileRead, FullPage, Vlcstatus
 	Filename=siU)\<info name\=\"filename\"\>(.*?)\<\/info\>
-;	Reg=siU)<a href\=\"http\:\/\/www\.videolan\.org\">(.*?)\<\/a\>
 	RegExMatch(FullPage,Filename,Get)
-	listvars
-	return Get1
+	If Not (Get="")
+	{
+		return Get1
+	} Else {
+		Errorname=siU)\<h1\>(.*?)\<\/h1\>
+		RegExMatch(FullPage,Errorname,Error)
+		ToolTip, %Error1%
+		Sleep 3000
+		ToolTip,
+	}
 }
 
 Winamp(O){ ; by Cardellos
@@ -519,6 +770,9 @@ Winamp(O){ ; by Cardellos
 ;==[Close]
 GuiClose:
 ExitApp
+GuiSetClose:
+	Gui,Set: Destroy
+return
 ListVars:
 ListVars
 return
