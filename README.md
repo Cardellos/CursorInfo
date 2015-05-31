@@ -5,14 +5,22 @@ software not fully ready, but fully usable
 
 Features:
 
-toggle clock
+Following mouse cursor:
 
-toggle colour changing battery
+	toggle clock
 
-Battery in systray
+	toggle colour changing battery
 
-toggle shortcut f8-12 media keys
+	toggle wifi 
 
-toggle now playing with printsceen key
+	toggle Network Monitor (Upload/Download kbs)
 
-toggle wifi % with printscreen key (after now playing if on)
+Extra Stuff:
+
+	Battery in systray
+
+	toggle shortcut f8-12 media keys
+
+	toggle now playing with printsceen key
+
+	toggle wifi % with printscreen key (after now playing if on)
