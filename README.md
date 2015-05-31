@@ -10,6 +10,8 @@ Following mouse cursor:
 	toggle clock
 
 	toggle colour changing battery
+	
+	toggle Calendar
 
 	toggle wifi 
 
