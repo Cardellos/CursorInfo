@@ -1,0 +1,57 @@
+;=====[ Main ]
+OMN=2
+GUITrans=1
+Trans=150
+Slot1:="WiF"
+Slot2:="Net"
+Slot3:="Wea"
+Slot4:="CaB"
+Slot5:="Cal"
+Slot6:="Blu"
+Slot7:="Vol"
+Slot8:="Mai"
+GxO:=0
+GyO:=0
+VolDn:=0
+VolUp:=0
+Slot1x:=00
+Slot1y:=00
+Slot2x:=19
+Slot2y:=00
+Slot3x:=63
+Slot3y:=00
+Slot4x:=19
+Slot4y:=19
+Slot5x:=63
+Slot5y:=19
+Slot6x:=00
+Slot6y:=38
+Slot7x:=19
+Slot7y:=38
+Slot8x:=63
+Slot8y:=38
+;=====[ Net ]
+NetTogg=1
+NetDis=3
+;=====[ CaB ]
+BattTogg=1
+ClockTogg=1
+BattBgTogg=1
+ClockBg=0
+;=====[ WiFi ]
+WifiTogg=1
+WhyfiTogg=1
+WiFIco=1
+;=====[ HK ]
+HotTogg=1
+ShowMeKey=
+;=====[ NP ]
+NPTogg=1
+;=====[ Vol ]
+VolTogg=1
+VolTimer=1200000
+;VolTimer=5000
+;=====[ Cal ]
+CalTogg=1
+CalTopSel=1
+CalBotSel=1
